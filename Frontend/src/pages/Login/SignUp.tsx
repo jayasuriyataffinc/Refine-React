@@ -12,7 +12,7 @@ const Signup: React.FC = () => {
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [showConfirmPassword, setShowPConfirmassword] = useState<boolean>(false);
+  const [showConfirmPassword, setShowPConfirmpassword] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate(); 
 
@@ -110,11 +110,11 @@ const Signup: React.FC = () => {
              <button
               type="button"
               className="password-toggle"
-              onClick={() => setShowPassword(!showPassword)}
+              onClick={() => setShowPConfirmpassword(!showConfirmPassword)}
               tabIndex={-1} 
-              aria-label={showPassword ? "Hide password" : "Show password"} 
+              aria-label={showConfirmPassword ? "Hide password" : "Show password"} 
             >
-              {showPassword ? <EyeOff /> : <Eye />}
+              {showConfirmPassword ? <EyeOff /> : <Eye />}
             </button>
           </div>
           {error && <p className="error-message">{error}</p>}

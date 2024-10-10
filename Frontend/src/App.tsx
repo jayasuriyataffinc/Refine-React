@@ -6,7 +6,7 @@ import {
 } from "@refinedev/core";
 import "@refinedev/antd/dist/reset.css";
 import Login from "./pages/Login/Login";
-import { BrowserRouter, redirect, Routes, Route } from "react-router-dom";
+import { BrowserRouter, redirect, Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Login/Home";
 import routerProvider from "@refinedev/react-router-v6";
 import './App.css'
@@ -55,10 +55,12 @@ const authProvider: AuthProvider = {
 };
 
 const App: React.FC = () => {
+  
   return (
     <BrowserRouter>
       <Refine authProvider={authProvider} routerProvider={routerProvider}>
         <Routes>
+        <Route path="/" element={<Navigate to="/login" replace={true} />}/>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/home" element={<Home />} />
