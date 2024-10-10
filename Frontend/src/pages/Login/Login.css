@@ -15,7 +15,8 @@ html, body {
     padding: 1rem;
     gap: 70px;
     height: 100vh;
-    overflow: hidden;
+    overflow-x: auto;
+    max-width:100vw;
 }
 
 .login-card {
