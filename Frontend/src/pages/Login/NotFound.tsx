@@ -1,16 +1,23 @@
-import React from 'react'
+
+import './NotFound.css'; 
 
 const NotFound = () => {
   return (
-    <div>
-        <main>
-            <center>
-                <h1 style={{color : "red", paddingTop : "20%"}}>Page Not Found</h1>
-            </center>
-        </main>
-      
+    <div className="container">
+      <main className="main">
+        <h1 className="heading">404</h1>
+        <p className="text">Oops! Page Not Found</p>
+        <Button 
+          variant="contained" 
+          color="primary" 
+          href="/" 
+          className="button"
+        >
+          Go to Homepage
+        </Button>
+      </main>
     </div>
-  )
-}
+  );
+};
 
-export default NotFound
+export default NotFound;
