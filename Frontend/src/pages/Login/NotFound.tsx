@@ -1,22 +1,17 @@
-
 import { Button } from '@mui/material';
 import './NotFound.css'; 
 
 const NotFound = () => {
   return (
-    <div className="container">
-      <main className="main">
-        <h1 className="heading">404</h1>
-        <p className="text">Oops! Page Not Found</p>
-        <Button 
+    <div >
+      <footer><Button 
           variant="contained" 
           color="primary" 
           href="/login" 
           className="button"
         >
-          Go to Homepage
-        </Button>
-      </main>
+          Go Back
+        </Button></footer>  
     </div>
   );
 };
