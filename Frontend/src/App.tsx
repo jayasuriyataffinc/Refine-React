@@ -59,7 +59,7 @@ const App: React.FC = () => {
     <BrowserRouter>
       <Refine authProvider={authProvider} routerProvider={routerProvider}>
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/home" element={<Home />} />
           <Route path="*" element={<NotFound />} />

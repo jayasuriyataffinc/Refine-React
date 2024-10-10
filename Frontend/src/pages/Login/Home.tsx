@@ -6,7 +6,7 @@ const Home = () => {
 
   const handleLoginRedirect = () => {
     localStorage.removeItem("login")
-    navigate('/'); 
+    navigate('/login'); 
   };
 
   return (
@@ -28,7 +28,7 @@ const Home = () => {
           efficient and seamless way possible.
         </p>
         <button className="login-button" onClick={handleLoginRedirect}>
-          Go to Login
+          Logout
         </button>
       </div>
     </div>

@@ -11,7 +11,7 @@ const NotFound = () => {
         <Button 
           variant="contained" 
           color="primary" 
-          href="/" 
+          href="/login" 
           className="button"
         >
           Go to Homepage

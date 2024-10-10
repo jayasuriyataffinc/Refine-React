@@ -33,7 +33,7 @@ const Signup: React.FC = () => {
       });
 
       if (res.data.signup) {
-        navigate('/'); 
+        navigate('/login'); 
         alert(res.data.message)
       }      
       
@@ -122,7 +122,7 @@ const Signup: React.FC = () => {
             <LogIn />
             Sign up
           </button>
-          <a style={{ color: "white", textDecoration: "none", fontWeight: "lighter", fontSize: "13px" }} href="/">
+          <a style={{ color: "white", textDecoration: "none", fontWeight: "lighter", fontSize: "13px" }} href="/login">
             You have an account <span><u>Login here</u></span>
           </a>
         </form>
