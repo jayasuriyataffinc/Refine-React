@@ -21,7 +21,7 @@ const Login: React.FC = () => {
         username,
         password
       });
-
+      alert(response.data.message)
       console.log('Login successful:', response.data);
       localStorage.setItem("login", response.data.login);
       localStorage.setItem("token", response.data.token);
@@ -29,9 +29,17 @@ const Login: React.FC = () => {
      
       await login({ username, password }); 
 
-    } catch (error: any) {
-      console.error('Login failed:', error.response?.data || error.message);
-      setError("Invalid username or password. Please try again.");
+    }
+    //  catch (error: any) {
+    //   console.error('Login failed:', error.response?.data || error.message);
+    //   setError("Invalid username or password. Please try again.");
+    // }
+    catch (error: any) {
+      if (error.response && error.response.data && error.response.data.message) {
+        setError(error.response.data.message);
+      } else {
+        setError("Network error or Server Error");
+      }
     }
   };
 

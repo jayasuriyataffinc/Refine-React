@@ -12,6 +12,7 @@ import routerProvider from "@refinedev/react-router-v6";
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Signup from "./pages/Login/SignUp";
+import NotFound from "./pages/Login/NotFound";
 
 const authProvider: AuthProvider = {
   login: async ({ username, password }: any): Promise<AuthActionResponse> => {
@@ -61,6 +62,7 @@ const App: React.FC = () => {
           <Route path="/" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/home" element={<Home />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Refine>
     </BrowserRouter>

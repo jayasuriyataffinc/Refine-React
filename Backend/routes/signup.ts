@@ -7,17 +7,27 @@ const prisma = new PrismaClient();
 
 app.use(express.json());
 
-
 app.post('/', async (req: Request, res: Response): Promise<any> => {
   try {
     const { username, email, password } = req.body;
 
-    const userExist = await prisma.users.findUnique({
-      where: { username: username },
+    const userExist = await prisma.users.findFirst({
+      where: {
+        OR: [
+          { username: username },
+          { email: email }
+        ]
+      }
     });
 
     if (userExist) {
-      return res.status(400).json({ message: 'User already Exist...' });
+      if (userExist.email === email) {
+        return res.status(400).json({ message: 'Email already in use.' });
+      }
+       
+      if (userExist.username === username) {
+        return res.status(400).json({ message: 'User already Exist' });
+      }
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -29,9 +39,11 @@ app.post('/', async (req: Request, res: Response): Promise<any> => {
         password: hashedPassword,
       },
     });
-    return res.status(201).json({signup:true, message: 'User created successfully', newUser});
+
+    // Respond with success
+    return res.status(201).json({ signup: true, message: 'User created successfully', newUser });
   } catch (error) {
-    console.error('Signup Err :', error);
+    console.error('Signup Error:', error);
     return res.status(500).json({ message: 'Internal server error' });
   }
 });

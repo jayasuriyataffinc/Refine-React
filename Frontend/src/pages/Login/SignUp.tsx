@@ -4,6 +4,7 @@ import { LogIn, Eye, EyeOff, Mail, Lock, UserPlus } from "lucide-react";
 import './Login.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { log } from 'console';
 
 const Signup: React.FC = () => {
   const [username, setUsername] = useState<string>("");
@@ -11,6 +12,7 @@ const Signup: React.FC = () => {
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [showConfirmPassword, setShowPConfirmassword] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate(); 
 
@@ -19,7 +21,7 @@ const Signup: React.FC = () => {
     setError(null);
     
     if (password !== confirmPassword) {
-      setError("Passwords do not match.");
+      setError("Passwords doesn't match.");
       return;
     }
 
@@ -32,10 +34,15 @@ const Signup: React.FC = () => {
 
       if (res.data.signup) {
         navigate('/'); 
-      }
+        alert(res.data.message)
+      }      
       
     } catch (error: any) {
-      setError("Error creating account. Please try again.");
+      if (error.response && error.response.data && error.response.data.message) {
+        setError(error.response.data.message);
+      } else {
+        setError("Error creating account. Please try again.");
+      }
     }
   };
 
@@ -91,7 +98,7 @@ const Signup: React.FC = () => {
           <div className="input-group">
             <Lock className="input-icon" />
             <input
-              type={showPassword ? "text" : "password"}
+              type={showConfirmPassword ? "text" : "password"}
               className="input-field"
               placeholder="Confirm Password"
               value={confirmPassword}
@@ -101,9 +108,9 @@ const Signup: React.FC = () => {
             <button
               type="button"
               className="password-toggle"
-              onClick={() => setShowPassword(!showPassword)}
+              onClick={() => setShowPConfirmassword(!showConfirmPassword)}
             >
-              {showPassword ? <EyeOff /> : <Eye />}
+              {showConfirmPassword ? <EyeOff /> : <Eye />}
             </button>
           </div>
           {error && <p className="error-message">{error}</p>}
