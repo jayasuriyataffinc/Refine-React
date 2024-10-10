@@ -87,10 +87,12 @@ const Signup: React.FC = () => {
               onChange={(e) => setPassword(e.target.value)}
               required
             />
-            <button
+             <button
               type="button"
               className="password-toggle"
               onClick={() => setShowPassword(!showPassword)}
+              tabIndex={-1} 
+              aria-label={showPassword ? "Hide password" : "Show password"} 
             >
               {showPassword ? <EyeOff /> : <Eye />}
             </button>
@@ -105,12 +107,14 @@ const Signup: React.FC = () => {
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
             />
-            <button
+             <button
               type="button"
               className="password-toggle"
-              onClick={() => setShowPConfirmassword(!showConfirmPassword)}
+              onClick={() => setShowPassword(!showPassword)}
+              tabIndex={-1} 
+              aria-label={showPassword ? "Hide password" : "Show password"} 
             >
-              {showConfirmPassword ? <EyeOff /> : <Eye />}
+              {showPassword ? <EyeOff /> : <Eye />}
             </button>
           </div>
           {error && <p className="error-message">{error}</p>}
