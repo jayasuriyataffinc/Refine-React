@@ -122,9 +122,9 @@ const Signup: React.FC = () => {
             <LogIn />
             Sign up
           </button>
-          <a style={{ color: "white", textDecoration: "none", fontWeight: "lighter", fontSize: "13px" }} href="/login">
-            You have an Account?  <span style={{fontSize:"14px",fontWeight:"bold", color:"DodgerBlue", textDecoration: "underline DodgerBlue" }}>Click here</span> to LogIn
-          </a>
+          <p style={{ color: "white", textDecoration: "none", fontWeight: "lighter", fontSize: "13px" }} >
+            You have an Account ? <a style={{fontSize:"14px",fontWeight:"bold", color:"DodgerBlue", textDecoration: "underline DodgerBlue" }} href="/login"> Click here</a>&nbsp;to LogIn
+          </p>
         </form>
         <div className="divider">
           <span className="divider-text">Or continue with</span>

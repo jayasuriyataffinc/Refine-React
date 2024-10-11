@@ -88,7 +88,7 @@ const Login: React.FC = () => {
             <LogIn />
             Login
           </button>
-          <a style={{ color: "white", textDecoration: "none", fontWeight: "lighter", fontSize: "13px" }} href="/signup">Don't have an Account?  <span style={{fontSize:"14px",fontWeight:"bold", color:"DodgerBlue", textDecoration: "underline DodgerBlue" }}>Click here</span> to signup</a>
+          <p style={{ color: "white", textDecoration: "none", fontWeight: "lighter", fontSize: "13px" }}>Don't have an Account?  <a style={{fontSize:"14px",fontWeight:"bold", color:"DodgerBlue", textDecoration: "underline DodgerBlue" }}  href="/signup"> Click here</a>&nbsp;to signup</p>
         </form>
         <div className="divider">
           <span className="divider-text">Or continue with</span>
