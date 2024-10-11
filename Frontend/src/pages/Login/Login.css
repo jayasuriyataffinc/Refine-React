@@ -10,7 +10,7 @@ html, body {
     align-items: center;
     justify-content: center;
     background: linear-gradient(90deg, #022644, #806702);
-    /* background-image: url('../../Images/Image.jpg'); */
+    /* background-image: url('../../assets/Image.jpg'); */
     background-size: cover;
     padding: 1rem;
     gap: 70px;

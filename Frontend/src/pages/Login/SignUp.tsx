@@ -4,7 +4,6 @@ import { LogIn, Eye, EyeOff, Mail, Lock, UserPlus } from "lucide-react";
 import './Login.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { log } from 'console';
 
 const Signup: React.FC = () => {
   const [username, setUsername] = useState<string>("");
