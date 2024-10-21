@@ -49,39 +49,39 @@ const Signup: React.FC = () => {
     <div className="login-container">
       <div className="login-card">
         <div className="login-header">
-          <UserPlus className="w-16 h-16 mx-auto text-white" />
+          <UserPlus className="w-16 h-16 mx-auto text-white" data-testid="title-icon" />
           <h2 className="login-title">Create Account</h2>
           <p className="login-subtitle">Sign up for a new account</p>
         </div>
-        <form onSubmit={handleSignup}>
+        <form onSubmit={handleSignup} data-testid="form-test">
           <div className="input-group">
-            <Mail className="input-icon" />
+            <Mail className="input-icon" data-testid="username-icon"  />
             <input
               type="text"
               className="input-field"
-              placeholder="Username"
+              placeholder="Enter the Username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
             />
           </div>
           <div className="input-group">
-            <Mail className="input-icon" />
+            <Mail className="input-icon"  data-testid="mail-icon" />
             <input
               type="email"
               className="input-field"
-              placeholder="Email"
+              placeholder="Enter the Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
             />
           </div>
           <div className="input-group">
-            <Lock className="input-icon" />
+            <Lock className="input-icon" data-testid="password-icon" />
             <input
               type={showPassword ? "text" : "password"}
               className="input-field"
-              placeholder="Password"
+              placeholder="Enter the Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -89,6 +89,7 @@ const Signup: React.FC = () => {
              <button
               type="button"
               className="password-toggle"
+              data-testid="password-toggle-icon"
               onClick={() => setShowPassword(!showPassword)}
               tabIndex={-1} 
               aria-label={showPassword ? "Hide password" : "Show password"} 
@@ -97,7 +98,7 @@ const Signup: React.FC = () => {
             </button>
           </div>
           <div className="input-group">
-            <Lock className="input-icon" />
+            <Lock className="input-icon" data-testid="con-password-icon"/>
             <input
               type={showConfirmPassword ? "text" : "password"}
               className="input-field"
@@ -109,6 +110,7 @@ const Signup: React.FC = () => {
              <button
               type="button"
               className="password-toggle"
+              data-testid="con-toggle-icon"
               onClick={() => setShowPConfirmpassword(!showConfirmPassword)}
               tabIndex={-1} 
               aria-label={showConfirmPassword ? "Hide password" : "Show password"} 
@@ -117,10 +119,8 @@ const Signup: React.FC = () => {
             </button>
           </div>
           {error && <p className="error-message">{error}</p>}
-          <button type="submit" className="submit-button">
-            <LogIn />
-            Sign up
-          </button>
+          <button type="submit" className="submit-button"  data-testid="signup-btn">
+            <LogIn data-testid="Signup-icon"/>Sign up</button>
           <p style={{ color: "white", textDecoration: "none", fontWeight: "lighter", fontSize: "13px" }} >
             You have an Account ? <a style={{fontSize:"14px",fontWeight:"bold", color:"DodgerBlue", textDecoration: "underline DodgerBlue" }} href="/login"> Click here</a>&nbsp;to LogIn
           </p>
@@ -129,7 +129,7 @@ const Signup: React.FC = () => {
           <span className="divider-text">Or continue with</span>
         </div>
         <div className="social-buttons">
-          <button className="social-button">
+          <button className="social-button" data-testid="google-btn">
             Google Account
           </button>
         </div>

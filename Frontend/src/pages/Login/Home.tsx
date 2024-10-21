@@ -27,7 +27,7 @@ const Home = () => {
           Join our community today and discover how we can help you achieve your goals in the most
           efficient and seamless way possible.
         </p>
-        <button className="login-button" onClick={handleLoginRedirect}>
+        <button className="login-button" onClick={handleLoginRedirect} data-testid='logout-btn'>
           Logout
         </button>
       </div>
