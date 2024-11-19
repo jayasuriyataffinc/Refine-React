@@ -1,10 +1,14 @@
 import { useLogin } from "@refinedev/core";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import Login from "../pages/Login/Login";
+import axios from 'axios';
+
 
 jest.mock("@refinedev/core", () => ({
   useLogin: jest.fn(),
 }));
+jest.mock('axios');
+
 
 describe("Login Component", () => {
   beforeEach(() => {
@@ -87,8 +91,10 @@ describe("Login Component", () => {
   test("Google btn", () => {
     render(<Login />);
     const onClick = jest.fn();
-    const btn = screen.getByTestId("google-btn")
+    const btn = screen.getByRole('button', {name: /Google Account/i});
     fireEvent.click(btn)
     expect(onClick).toHaveBeenCalledTimes(0)
   });
+
+ 
 });

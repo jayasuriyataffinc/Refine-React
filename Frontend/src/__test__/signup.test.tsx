@@ -1,10 +1,15 @@
 import { useNavigate } from "react-router-dom";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import Signup from "../pages/Login/SignUp";
+import axios from 'axios';
+import '@testing-library/jest-dom';
+
 
 jest.mock("react-router-dom", () => ({
     useNavigate: jest.fn(),
 }));
+jest.mock('axios');
+
 
 describe("Signup Component", () => {
   beforeEach(() => {
@@ -118,4 +123,62 @@ describe("Signup Component", () => {
     fireEvent.click(btn)
     expect(onClick).toHaveBeenCalledTimes(0)
   });
+
+  // test('Passwords do not match Error', async () => {
+  //   render(<Signup />);
+  
+  //   const password = screen.getByPlaceholderText('Enter the Password');
+  //   const confirmPassword = screen.getByPlaceholderText('Confirm Password');
+  //   const signupButton = screen.getByRole('button',{name: /Sign up/i});
+  
+  //   fireEvent.change(password, { target: { value: 'admin' } });
+  //   fireEvent.change(confirmPassword, { target: { value: '123' } });
+  
+  //   fireEvent.click(signupButton);
+  //   expect(screen.getByText("Passwords doesn't match.")).toBeInTheDocument();
+  // });
+
+  test('Toggle password visibility', () => {
+    render(<Signup />);
+    const passwordInput = screen.getByPlaceholderText('Enter the Password');
+    const togglePasswordButton = screen.getByTestId('password-toggle-icon');
+    expect(passwordInput).toHaveAttribute('type', 'password');
+    fireEvent.click(togglePasswordButton);
+    expect(passwordInput).toHaveAttribute('type', 'text');
+    fireEvent.click(togglePasswordButton);
+    expect(passwordInput).toHaveAttribute('type', 'password');  
+  });
+
+  test('Confirm Toggle password visibility', () => {
+    render(<Signup />);
+    const passwordInput = screen.getByPlaceholderText('Confirm Password');
+    const togglePasswordButton = screen.getByTestId('con-toggle-icon');
+    expect(passwordInput).toHaveAttribute('type', 'password');
+    fireEvent.click(togglePasswordButton);
+    expect(passwordInput).toHaveAttribute('type', 'text');
+    fireEvent.click(togglePasswordButton);
+    expect(passwordInput).toHaveAttribute('type', 'password');  
+  });
+  
+
+
+  test('should submit form with valid data',  () => {
+    render(<Signup />);
+  
+    const usernameInput = screen.getByPlaceholderText('Enter the Username');
+    const emailInput = screen.getByPlaceholderText('Enter the Email');
+    const passwordInput = screen.getByPlaceholderText('Enter the Password');
+    const confirmPasswordInput = screen.getByPlaceholderText('Confirm Password');
+    const signupButton = screen.getByRole('button',{name : /Sign up/i});
+  
+    fireEvent.change(usernameInput, { target: { value: 'admin' } });
+    fireEvent.change(emailInput, { target: { value: 'admin@gmail.com' } });
+    fireEvent.change(passwordInput, { target: { value: 'admin' } });
+    fireEvent.change(confirmPasswordInput, { target: { value: 'admin' } });
+      fireEvent.click(signupButton);
+       waitFor(() => expect(axios.post).toHaveBeenCalledTimes(1));
+       expect(axios.post).toHaveBeenCalled();
+      });
+  
+  
 });

@@ -13,13 +13,22 @@ import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Signup from "./pages/Login/SignUp";
 import NotFound from "./pages/Login/NotFound";
+import CourseList from "./pages/Login/CourseList";
+import Practice from "./components/Practice/Practice";
+import Employee from "./pages/Login/Employee";
+import Spring from "./pages/Login/Spring";
+import AwesomeReveal from './pages/Login/Practice/AwesomeReveal'
+import ChatRoom from "./pages/Login/ChatRoom";
+import LoginSample from "./pages/Login/LoginSample";
+
+
 
 const authProvider: AuthProvider = {
   login: async ({ username, password }: any): Promise<AuthActionResponse> => {
     if (localStorage.getItem("login")) {
       return {
         success: true,
-        redirectTo: "/home",
+        redirectTo: `/chatroom?username=${username}`,
       };
     }
     
@@ -34,8 +43,9 @@ const authProvider: AuthProvider = {
   },
 
   logout: async (): Promise<AuthActionResponse> => {
-    localStorage.removeItem("login");
-    localStorage.removeItem("token"); 
+    localStorage.clear();
+    // localStorage.removeItem("login");
+    // localStorage.removeItem("token"); 
     return Promise.resolve({ success: true });
   },
 
@@ -64,6 +74,13 @@ const App: React.FC = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/home" element={<Home />} />
+          <Route path="/course" element={<CourseList/>}/>
+          <Route path="/spring" element={<Spring/>}/>
+          <Route path="/employee" element={<Employee/>}/>
+          <Route path="/practice" element={<Practice />} />
+          <Route path="/awesomeReveal" element={<AwesomeReveal />} />
+          <Route path="/chatroom" element={<ChatRoom />} />
+          <Route path="/loginsample" element={<LoginSample />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Refine>

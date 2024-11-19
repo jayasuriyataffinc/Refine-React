@@ -1,14 +1,15 @@
-
 import React, { useState } from 'react';
-import { LogIn, Eye, EyeOff, Mail, Lock, UserPlus } from "lucide-react";
+import { LogIn, Eye, EyeOff, Mail, Lock, UserPlus, Phone } from "lucide-react";
 import './Login.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion'; 
 
 const Signup: React.FC = () => {
   const [username, setUsername] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [mobileNumber, setMobileNumber] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfirmPassword, setShowPConfirmpassword] = useState<boolean>(false);
@@ -18,9 +19,9 @@ const Signup: React.FC = () => {
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
-    
+
     if (password !== confirmPassword) {
-      setError("Passwords doesn't match.");
+      setError("Passwords don't match.");
       return;
     }
 
@@ -28,14 +29,14 @@ const Signup: React.FC = () => {
       const res = await axios.post('http://localhost:3000/api/signup', {
         username,
         email,
+        mobileNumber,
         password,
       });
 
       if (res.data.signup) {
         navigate('/login'); 
-        alert(res.data.message)
+        alert(res.data.message);
       }      
-      
     } catch (error: any) {
       if (error.response && error.response.data && error.response.data.message) {
         setError(error.response.data.message);
@@ -46,16 +47,38 @@ const Signup: React.FC = () => {
   };
 
   return (
-    <div className="login-container">
-      <div className="login-card">
+    <motion.div 
+      className="login-container"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <motion.div 
+        className="login-card"
+        initial={{ y: 30, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
         <div className="login-header">
           <UserPlus className="w-16 h-16 mx-auto text-white" data-testid="title-icon" />
           <h2 className="login-title">Create Account</h2>
           <p className="login-subtitle">Sign up for a new account</p>
         </div>
-        <form onSubmit={handleSignup} data-testid="form-test">
-          <div className="input-group">
-            <Mail className="input-icon" data-testid="username-icon"  />
+        <motion.form 
+          onSubmit={handleSignup} 
+          data-testid="form-test"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          <motion.div 
+            className="input-group"
+            initial={{ x: -20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            <Mail className="input-icon" data-testid="username-icon" />
             <input
               type="text"
               className="input-field"
@@ -64,9 +87,14 @@ const Signup: React.FC = () => {
               onChange={(e) => setUsername(e.target.value)}
               required
             />
-          </div>
-          <div className="input-group">
-            <Mail className="input-icon"  data-testid="mail-icon" />
+          </motion.div>
+          <motion.div 
+            className="input-group"
+            initial={{ x: -20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            <Mail className="input-icon" data-testid="mail-icon" />
             <input
               type="email"
               className="input-field"
@@ -75,8 +103,29 @@ const Signup: React.FC = () => {
               onChange={(e) => setEmail(e.target.value)}
               required
             />
-          </div>
-          <div className="input-group">
+          </motion.div>
+          <motion.div 
+            className="input-group"
+            initial={{ x: -20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            <Phone className="input-icon" data-testid="mail-icon" />
+            <input
+              type="Text"
+              className="input-field"
+              placeholder="Enter the Mobile Number"
+              value={mobileNumber}
+              onChange={(e) => setMobileNumber(e.target.value)}
+              required
+            />
+          </motion.div>
+          <motion.div 
+            className="input-group"
+            initial={{ x: -20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
             <Lock className="input-icon" data-testid="password-icon" />
             <input
               type={showPassword ? "text" : "password"}
@@ -86,7 +135,7 @@ const Signup: React.FC = () => {
               onChange={(e) => setPassword(e.target.value)}
               required
             />
-             <button
+            <button
               type="button"
               className="password-toggle"
               data-testid="password-toggle-icon"
@@ -96,8 +145,13 @@ const Signup: React.FC = () => {
             >
               {showPassword ? <EyeOff /> : <Eye />}
             </button>
-          </div>
-          <div className="input-group">
+          </motion.div>
+          <motion.div 
+            className="input-group"
+            initial={{ x: -20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
             <Lock className="input-icon" data-testid="con-password-icon"/>
             <input
               type={showConfirmPassword ? "text" : "password"}
@@ -107,7 +161,7 @@ const Signup: React.FC = () => {
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
             />
-             <button
+            <button
               type="button"
               className="password-toggle"
               data-testid="con-toggle-icon"
@@ -117,25 +171,35 @@ const Signup: React.FC = () => {
             >
               {showConfirmPassword ? <EyeOff /> : <Eye />}
             </button>
-          </div>
+          </motion.div>
           {error && <p className="error-message">{error}</p>}
-          <button type="submit" className="submit-button"  data-testid="signup-btn">
-            <LogIn data-testid="Signup-icon"/>Sign up</button>
-          <p style={{ color: "white", textDecoration: "none", fontWeight: "lighter", fontSize: "13px" }} >
-            You have an Account ? <a style={{fontSize:"14px",fontWeight:"bold", color:"DodgerBlue", textDecoration: "underline DodgerBlue" }} href="/login"> Click here</a>&nbsp;to LogIn
+          <motion.button 
+            type="submit" 
+            className="submit-button" 
+            data-testid="signup-btn"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <LogIn data-testid="Signup-icon"/>Sign up
+          </motion.button>
+          <p style={{ color: "white", textDecoration: "none", fontWeight: "lighter", fontSize: "13px" }}>
+            You have an Account? <a style={{fontSize:"14px",fontWeight:"bold", color:"DodgerBlue", textDecoration: "underline DodgerBlue" }} href="/login"> Click here</a> to Log In
           </p>
-        </form>
+        </motion.form>
         <div className="divider">
           <span className="divider-text">Or continue with</span>
         </div>
         <div className="social-buttons">
-          <button className="social-button" data-testid="google-btn">
+          <motion.button 
+            className="social-button" 
+            data-testid="google-btn"
+            whileHover={{ scale: 1.05 }}
+          >
             Google Account
-          </button>
+          </motion.button>
         </div>
-      </div>
-      {/* <img src={LoginImage} alt="Signup" className="right-image" /> */}
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 

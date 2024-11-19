@@ -20,8 +20,7 @@ app.post('/', async (req: Request, res: Response):Promise<any>   => {
   try {
     const { username, password } = req.body;
 
-    const user = await prisma.users.findUnique({where : {username: username}});
-    console.log(user?.username)
+    const user = await prisma.user.findUnique({where : {username: username}});
     if (!user) {
       return res.status(400).json({ message: 'Invalid username!' });
     }
@@ -29,13 +28,18 @@ app.post('/', async (req: Request, res: Response):Promise<any>   => {
       const passwordMatch = await bcrypt.compare(password, user.password);
 
       if (!passwordMatch) {
-        // console.log('Password does not match');
         return res.status(401).json({ message: 'Invalid username or password' });
       }   
+      // console.log('Password does not match');
 
-    const token = jwt.sign({ username: user.username }, JWT_SECRET);
+    const jwttoken = jwt.sign({ username: user.username }, JWT_SECRET);
+    const token= await bcrypt.hash(jwttoken, 10);
+    // console.log(token);
+    
 
-    return res.json({ message: "Login Successful ", login : true ,  token });
+    // console.log('Hitting');
+
+    return res.json({ message: "Login Successful ", login : true , user : user,  token });
   } catch (error) {
     // console.error('Login Err : ', error);
     return res.status(500).json({ message: 'server error' });

@@ -3,7 +3,7 @@ import './NotFound.css';
 
 const NotFound = () => {
   return (
-    <div >
+    <div className='fullpage'>
       <footer><Button 
           variant="contained" 
           color="primary" 

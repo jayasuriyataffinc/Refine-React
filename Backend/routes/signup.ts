@@ -9,13 +9,14 @@ app.use(express.json());
 
 app.post('/', async (req: Request, res: Response): Promise<any> => {
   try {
-    const { username, email, password } = req.body;
+    const { username, email, mobileNumber, password } = req.body;
 
-    const userExist = await prisma.users.findFirst({
+    const userExist = await prisma.user.findFirst({
       where: {
         OR: [
           { username: username },
-          { email: email }
+          { email: email },
+          {mobileNumber: mobileNumber}
         ]
       }
     });
@@ -28,19 +29,22 @@ app.post('/', async (req: Request, res: Response): Promise<any> => {
       if (userExist.username === username) {
         return res.status(400).json({ message: 'User already Exist' });
       }
+      if (userExist.mobileNumber === mobileNumber) {
+        return res.status(400).json({ message: 'Mobile Number already Exist' });
+      }
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const newUser = await prisma.users.create({
+    const newUser = await prisma.user.create({
       data: {
         username,
         email,
+        mobileNumber,
         password: hashedPassword,
       },
     });
 
-    // Respond with success
     return res.status(201).json({ signup: true, message: 'User created successfully', newUser });
   } catch (error) {
     console.error('Signup Error:', error);

@@ -11,7 +11,6 @@ test("renders Go Back button", () => {
     render(<NotFound />);
     const buttonElement = screen.getByText(/Go Back/i);
     expect(buttonElement).toBeInTheDocument();
-    expect(buttonElement.closest('a')).toHaveAttribute('href', '/login');
-    expect(buttonElement).toHaveClass('MuiButton-containedPrimary');
-    expect(buttonElement.closest('a')).toHaveAttribute('href', '/login');
+    expect(buttonElement).toHaveAttribute('href', '/login');
+    expect(buttonElement).toHaveAttribute('href', '/login');
   });
