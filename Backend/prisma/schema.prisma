@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = "postgresql://postgres:suriya@05@localhost:5432/refine_project/public"
 }
 
 model Employees {

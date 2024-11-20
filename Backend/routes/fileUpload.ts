@@ -31,11 +31,39 @@ const upload = multer({
 export const uploadFile = (req: Request, res: Response, next: NextFunction) => {
   upload.single("file")(req, res, (err) => {
     if (err instanceof multer.MulterError && err.code === "LIMIT_FILE_SIZE") {
-      return res.status(400).json({ message: `File is too big. File uploads must be smaller than 1 MB.` });
+      return res.status(400).json({ message: `File is too big. File uploads must be smaller than 8 MB.` });
     } else if (err) {
       return res.status(500).json({ message: "An error occurred during file upload." });
     }
     next();
+  });
+};
+
+const compressAudioFile = async (inputFilePath: string): Promise<string> => {
+  const fileName = path.basename(inputFilePath);
+  const compressedFileName = `compressed_${fileName}`;
+  const compressedFilePath = path.join(uploadLocation, compressedFileName);
+
+  return new Promise((resolve, reject) => {
+    ffmpeg(inputFilePath)
+      .outputOptions([
+        "-y",                      
+        "-acodec", "libmp3lame",   
+        "-b:a", "128k",           
+      ])
+      .output(compressedFilePath)
+      .on("start", (commandLine) => {
+        console.log("FFmpeg command:", commandLine);
+      })
+      .on("error", (error) => {
+        console.error("FFmpeg error:", error.message);
+        reject(new Error("Audio compression failed. Please check file format and paths."));
+      })
+      .on("end", () => {
+        console.log("Compression completed:", compressedFilePath);
+        resolve(compressedFilePath);
+      })
+      .run();
   });
 };
 
@@ -44,7 +72,7 @@ export const handleFileUpload = async (req: Request, res: Response): Promise<any
     const { roomname, sender, content } = req.body;
 
     if (!roomname || !sender) {
-      return res.status(400).json({ message: "Missing required fields (roomname, sender, content)." });
+      return res.status(400).json({ message: "Missing required fields (roomname, sender)." });
     }
 
     const room = await prisma.room.findUnique({
@@ -63,21 +91,7 @@ export const handleFileUpload = async (req: Request, res: Response): Promise<any
 
     if (req.file) {
       const originalPath = path.join(uploadLocation, req.file.filename);
-      const compressedFilename = `compressed_${req.file.filename}`;
-      const compressedPath = path.join(uploadLocation, compressedFilename);
-
-      await new Promise<void>((resolve, reject) => {
-        ffmpeg(originalPath)
-          .output(compressedPath)
-          .videoCodec("libx264")        
-          .audioCodec("aac")           
-          .size("320x?")                
-          .videoBitrate("500k")        
-          .audioBitrate("128k")         
-          .on("end", () => resolve())
-          .on("error", (error: any) => reject(error))
-          .run();
-      });
+      const compressedPath = await compressAudioFile(originalPath);
 
       fs.unlink(originalPath, (err) => {
         if (err) {
@@ -85,7 +99,7 @@ export const handleFileUpload = async (req: Request, res: Response): Promise<any
         }
       });
 
-      messageData.fileUrl = `/uploads/${compressedFilename}`;
+      messageData.fileUrl = `/uploads/${path.basename(compressedPath)}`;
       messageData.fileType = req.file.mimetype;
     }
 
