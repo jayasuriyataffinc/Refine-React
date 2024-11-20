@@ -22,16 +22,14 @@ export const handleMediaEvents = (socket: Socket, io: unknown) => {
           break;
 
         case "2": case "3": case "4": case "5": case "6": {
-          // Determine file type based on the message (video or audio)
-          const fileType = message < "5" ? "video" : "audio"; // If message is less than 5, it's video, else audio
+          const fileType = message < "5" ? "video" : "audio"; 
           const fileNumber = message === "2" ? "2" :
                              message === "3" ? "3" :
                              message === "4" ? "4" : 
                              message === "5" ? "5" : 
-                             message === "6" ? "6" : "";
+                             message === "6" ? "6" : "Not found click 1";
 
-          // Set the file extension based on file type
-          const fileExtension = fileType === "video" ? "mp4" : "mp3";  // Video -> MP4, Audio -> MP3
+          const fileExtension = fileType === "video" ? "mp4" : "mp3";  
           const filePath = path.join(__dirname, "public", "assets", fileType, `${fileType}${fileNumber}.${fileExtension}`);
 
           console.log(`Looking for file at: ${filePath}`);
