@@ -2,6 +2,7 @@ import React, { Key, ReactNode, useEffect, useState } from "react";
 import io, { Socket } from "socket.io-client";
 import "./ChatRoom.css";
 import axios from "axios";
+import { Pointer } from "lucide-react";
 
 let socket: Socket;
 
@@ -23,24 +24,19 @@ const ChatRoom: React.FC = () => {
   const [user, setUser] = useState<string>("");
   const [room, setRoom] = useState<string>("");
   const [searchedNumber, setSearchedNumber] = useState<string>("");
-  const [searchedUser, setSearchedUser] = useState<string>(
-    "Search and start your conversation"
-  );
+  const [searchedUser, setSearchedUser] = useState<string>("Search and start your conversation");
   const [users, setUsers] = useState<User[]>([]);
   const [message, setMessage] = useState<string>("");
   const [file, setFile] = useState<File | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
-  const [isOnline, setIsOnline] = useState<boolean>(false);
 
   const socketUrl = "http://localhost:3000";
-  const loginMobile: any = localStorage.getItem("mobileNumber");
+  var loginMobile: any = localStorage.getItem("mobileNumber");
 
   useEffect(() => {
     const gettingRecentUser = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:3000/chatRoom/${loginMobile}`
-        );
+        const response = await axios.get(`http://localhost:3000/chatRoom/${loginMobile}`);
         setUsers(response.data.usersDetails);
       } catch (error) {
         console.log(error);
@@ -78,9 +74,6 @@ const ChatRoom: React.FC = () => {
           );
 
           socket.on("message", (msg: Message) => {
-            if (msg.text === "Online") {
-              setIsOnline(true);
-            }
             setMessages((prevMsg) => [...prevMsg, msg]);
           });
 
@@ -147,11 +140,7 @@ const ChatRoom: React.FC = () => {
           () => setFile(null)
         );
       } catch (error: any) {
-        if (
-          error.response &&
-          error.response.data &&
-          error.response.data.message
-        ) {
+        if (error.response && error.response.data && error.response.data.message) {
           alert(error.response.data.message);
         } else {
           alert("File Uploaded Successfully...");
@@ -170,19 +159,9 @@ const ChatRoom: React.FC = () => {
               <li
                 key={i}
                 className="listUsers"
-                onClick={() =>
-                  searchMobileNumber(
-                    user.roomname.replace(
-                      new RegExp(`${loginMobile}|[^a-zA-Z0-9]`, "g"),
-                      ""
-                    )
-                  )
-                }
+                onClick={() => searchMobileNumber(user.roomname.replace(new RegExp(`${loginMobile}|[^a-zA-Z0-9]`, 'g'), ''))}
               >
-                {user.roomname.replace(
-                  new RegExp(`${loginMobile}|[^a-zA-Z0-9]`, "g"),
-                  ""
-                )}
+                {user.roomname.replace(new RegExp(`${loginMobile}|[^a-zA-Z0-9]`, 'g'), '')}
               </li>
             ))}
           </ul>
@@ -208,7 +187,6 @@ const ChatRoom: React.FC = () => {
                   <span className="glyphicon glyphicon-comment"></span>
                   {room}
                 </h3>
-                {isOnline && <p style={{ color: "white" }}>Online</p>}
               </div>
             </div>
             <div className="panel-body msg_container_base" id="chat_body">
@@ -225,7 +203,7 @@ const ChatRoom: React.FC = () => {
                         msg.sender === loginMobile ? "msg_sent" : "msg_receive"
                       }`}
                     >
-                      {/* {msg.fileUrl ? (
+                      {msg.fileUrl ? (
                         <>
                           {msg.fileType?.startsWith("audio") && (
                             <div>
@@ -251,44 +229,7 @@ const ChatRoom: React.FC = () => {
                         </>
                       ) : (
                         <p>{msg.content || msg.text}</p>
-                      )} */}
-
-                      {msg.fileUrl ? (
-                        <>
-                           {msg.fileType?.startsWith("audio") && (
-                            <div>
-                              <p>Audio file received.</p>
-                              <button
-                                onClick={() => {
-                                  const url = `http://localhost:3000${msg.fileUrl}`;
-                                  localStorage.setItem("audio", url);
-                                  window.open(url);
-                                }}
-                              >
-                                Download Audio
-                              </button>
-                            </div>
-                          )} 
-
-                          {msg.fileType?.startsWith("video") && (
-                            <div>
-                              <p>Video file received.</p>
-                              <button
-                                onClick={() => {
-                                  const url = `http://localhost:3000${msg.fileUrl}`;
-                                  localStorage.setItem("video", url);
-                                  window.open(url);
-                                }}
-                              >
-                                Download Video
-                              </button>
-                            </div>
-                          )}
-                        </>
-                      ) : (
-                        <p>{msg.content || msg.text}</p>
                       )}
-
                       <time>{msg.user}</time>
                     </div>
                   </div>
@@ -321,9 +262,9 @@ const ChatRoom: React.FC = () => {
                   onChange={(e) => setFile(e.target.files?.[0] || null)}
                 />
                 <button
-                  className="btn btn-primary btn-sm"
-                  id="btn-chat"
+                  className="btn btn-secondary btn-sm"
                   onClick={handleFileSend}
+                  disabled={!file}
                 >
                   Send File
                 </button>

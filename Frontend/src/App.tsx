@@ -20,6 +20,7 @@ import Spring from "./pages/Login/Spring";
 import AwesomeReveal from './pages/Login/Practice/AwesomeReveal'
 import ChatRoom from "./pages/Login/ChatRoom";
 import LoginSample from "./pages/Login/LoginSample";
+import Chat from "./pages/Login/Chat";
 
 
 
@@ -81,6 +82,7 @@ const App: React.FC = () => {
           <Route path="/awesomeReveal" element={<AwesomeReveal />} />
           <Route path="/chatroom" element={<ChatRoom />} />
           <Route path="/loginsample" element={<LoginSample />} />
+          <Route path='/chat' element={<Chat/>}/>
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Refine>

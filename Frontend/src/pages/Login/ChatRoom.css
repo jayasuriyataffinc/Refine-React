@@ -160,11 +160,3 @@ img {
     cursor: pointer;
     margin: 15px;
   }
-
-  .files{
-    justify-content: center;
-
-    height: 30%;
-    width: 30%;
-  }
-

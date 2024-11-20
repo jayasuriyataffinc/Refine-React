@@ -139,6 +139,8 @@ const Login: React.FC = () => {
           <p style={{ color: "white", textDecoration: "none", fontWeight: "lighter", fontSize: "13px" }}>
             Don't have an Account? <a style={{ fontSize: "14px", fontWeight: "bold", color: "DodgerBlue", textDecoration: "underline DodgerBlue" }} href="/signup">Click here</a>&nbsp;to signup
           </p>
+          <br></br>
+          <a style={{fontSize: "14px",fontWeight: "bold",color: "DodgerBlue",textDecoration: "underline DodgerBlue",}}href="/chat">{" "}Help Chatbot</a>
         </motion.form>
         <motion.div
           className="divider"
