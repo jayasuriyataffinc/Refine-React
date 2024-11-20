@@ -29,8 +29,8 @@ export const handleRoomEvents = (socket: Socket, io: Server) => {
       users[socket.id] = { roomname, userName: userName?.username || 'Unknown' };
 
       socket.join(roomname);
-      socket.emit('message', { text: `Online` });
-      // socket.broadcast.to(roomname).emit('message', { text: `Online` });
+      // socket.emit('message', { text: `Online` });
+      socket.broadcast.to(roomname).emit('message', { text: `Online` });
 
       io.to(roomname).emit('roomMembers', await prisma.room.findMany({
         where: { roomname },
