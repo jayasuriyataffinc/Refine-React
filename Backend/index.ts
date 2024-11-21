@@ -33,15 +33,9 @@ const io = new Server(httpServer, {
 });
 
 io.on("connection", (socket) => {
-  // console.log("A user connected:", socket.id);
-
   handleRoomEvents(socket, io);
 
   handleMediaEvents(socket, io);
-
-  // socket.on("disconnect", () => {
-  //   console.log("User disconnected:", socket.id);
-  // });
 });
 
 app.get(

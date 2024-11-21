@@ -22,14 +22,14 @@ export const handleMediaEvents = (socket: Socket, io: unknown) => {
           break;
 
         case "2": case "3": case "4": case "5": case "6": {
-          const fileType = message < "5" ? "video" : "audio"; 
+          const fileType = message < "5" ? "video" : "audio";
           const fileNumber = message === "2" ? "2" :
                              message === "3" ? "3" :
                              message === "4" ? "4" : 
                              message === "5" ? "5" : 
-                             message === "6" ? "6" : "Not found click 1";
+                             message === "6" ? "6" : "";
 
-          const fileExtension = fileType === "video" ? "mp4" : "mp3";  
+          const fileExtension = fileType === "video" ? "mp4" : "mp3"; 
           const filePath = path.join(__dirname, "public", "assets", fileType, `${fileType}${fileNumber}.${fileExtension}`);
 
           console.log(`Looking for file at: ${filePath}`);

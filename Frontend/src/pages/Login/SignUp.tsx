@@ -3,7 +3,10 @@ import { LogIn, Eye, EyeOff, Mail, Lock, UserPlus, Phone, UserCheck } from "luci
 import './Login.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion'; 
+import { motion } from 'framer-motion';
+import io, { Socket } from "socket.io-client";
+
+let socket: Socket;
 
 const Signup: React.FC = () => {
   const [username, setUsername] = useState<string>("");
@@ -17,6 +20,8 @@ const Signup: React.FC = () => {
   const [userRole, setUserRole] = useState<string >();
 
   const navigate = useNavigate(); 
+  const socketUrl = "http://localhost:3000";
+
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,8 +40,25 @@ const Signup: React.FC = () => {
         password,
         userRole
       });
+      if(userRole === '2'){
+      const  roomname = `1111111111_${mobileNumber}`
 
       if (res.data.signup) {
+        socket = io(socketUrl);
+        socket.emit(
+          "join",
+          {
+            roomname,
+            senderMobileNumber: '1111111111',
+            receiverMobileNumber: mobileNumber,
+          },
+          (err: string) => {
+            if (err) {
+              console.log(err);
+            }
+          }
+        );
+      }
         navigate('/login'); 
         alert(res.data.message);
       }      
