@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { LogIn, Eye, EyeOff, Mail, Lock, UserPlus, Phone } from "lucide-react";
+import { LogIn, Eye, EyeOff, Mail, Lock, UserPlus, Phone, UserCheck } from "lucide-react";
 import './Login.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -14,6 +14,8 @@ const Signup: React.FC = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfirmPassword, setShowPConfirmpassword] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [userRole, setUserRole] = useState<string >();
+
   const navigate = useNavigate(); 
 
   const handleSignup = async (e: React.FormEvent) => {
@@ -31,6 +33,7 @@ const Signup: React.FC = () => {
         email,
         mobileNumber,
         password,
+        userRole
       });
 
       if (res.data.signup) {
@@ -172,6 +175,25 @@ const Signup: React.FC = () => {
               {showConfirmPassword ? <EyeOff /> : <Eye />}
             </button>
           </motion.div>
+          <motion.div
+              className="input-group"
+              initial={{ x: -100, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ delay: 0.8, duration: 0.2 }}
+            >
+               <UserCheck className="input-icon" data-testid="password-icon" />
+              <select
+                className="input-field"
+                id="userRole"
+                value={userRole}
+                onChange={(e) => setUserRole(e.target.value)}
+                required
+              >
+                <option value="">Select Role</option>
+                <option value="1">Admin</option>
+                <option value="2">Customer</option>
+              </select>
+            </motion.div>
           {error && <p className="error-message">{error}</p>}
           <motion.button 
             type="submit" 

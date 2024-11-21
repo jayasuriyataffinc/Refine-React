@@ -6,13 +6,19 @@ const prisma = new PrismaClient();
 
 app.use(express.json());
 
-app.get('/:mobileNumber', async (req: Request, res: Response): Promise<any> => {
+app.get('/:roleId/:mobileNumber', async (req: Request, res: Response): Promise<any> => {
   try {
-    const { mobileNumber } = req.params;
-
-      const user = await prisma.user.findFirst({
+    const { roleId, mobileNumber } = req.params;
+    var user;
+    if(roleId === "1"){
+       user = await prisma.user.findUnique({
       where: { mobileNumber: mobileNumber as string },
-    });
+    });}
+    
+    if(roleId === "2"){
+       user = await prisma.user.findUnique({
+      where: { mobileNumber: mobileNumber as string, roleId : 1 },
+    });}
 
 
 

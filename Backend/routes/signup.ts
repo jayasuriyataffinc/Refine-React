@@ -9,7 +9,7 @@ app.use(express.json());
 
 app.post('/', async (req: Request, res: Response): Promise<any> => {
   try {
-    const { username, email, mobileNumber, password } = req.body;
+    const { username, email, mobileNumber, password, userRole } = req.body;
 
     const userExist = await prisma.user.findFirst({
       where: {
@@ -42,6 +42,7 @@ app.post('/', async (req: Request, res: Response): Promise<any> => {
         email,
         mobileNumber,
         password: hashedPassword,
+        roleId: parseInt(userRole),
       },
     });
 

@@ -6,6 +6,7 @@ import registerRouter from './register'
 import employeeRouter from './employee'
 import FindMobileNumber from './FindMobileNumber'
 import getRoomMessages from './getRoomMessages'
+import role from './role'
 // import message from './message'
 
 
@@ -17,6 +18,7 @@ router.use('/register', registerRouter);
 router.use('/employees', employeeRouter);
 router.use('/findMobileNumber', FindMobileNumber);
 router.use('/getRoomMessages', getRoomMessages);
+router.use('/role', role);
 // router.use('/', message);
 
 

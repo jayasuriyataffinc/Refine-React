@@ -29,7 +29,8 @@ const authProvider: AuthProvider = {
     if (localStorage.getItem("login")) {
       return {
         success: true,
-        redirectTo: `/chatroom?username=${username}`,
+        redirectTo: `/home`,
+        // redirectTo: `/chatroom?username=${username}`,
       };
     }
     

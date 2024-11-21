@@ -34,6 +34,7 @@ const ChatRoom: React.FC = () => {
 
   const socketUrl = "http://localhost:3000";
   const loginMobile: any = localStorage.getItem("mobileNumber");
+  const roleId = localStorage.getItem("roleId")
 
   useEffect(() => {
     const gettingRecentUser = async () => {
@@ -53,7 +54,7 @@ const ChatRoom: React.FC = () => {
     if (mobileNumber.length === 10) {
       try {
         const response = await axios.get(
-          `http://localhost:3000/api/findMobileNumber/${mobileNumber}`
+          `http://localhost:3000/api/findMobileNumber/${roleId}/${mobileNumber}`
         );
         setSearchedUser(response.data.username);
 
@@ -188,7 +189,7 @@ const ChatRoom: React.FC = () => {
           </ul>
         </div>
         <div className="col-xs-8 col-md-8">
-          <div className="search-bar">
+          {roleId == '1' ? (<div className="search-bar">
             <input
               type="text"
               className="form-control"
@@ -199,7 +200,7 @@ const ChatRoom: React.FC = () => {
             <button onClick={() => searchMobileNumber(searchedNumber)}>
               Search
             </button>
-          </div>
+          </div>):null}
 
           <div className="panel panel-default">
             <div className="panel-heading top-bar">

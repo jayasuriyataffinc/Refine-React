@@ -5,8 +5,12 @@ const Home = () => {
   const navigate = useNavigate();
 
   const handleLoginRedirect = () => {
-    localStorage.removeItem("login")
+    localStorage.clear()
     navigate('/login'); 
+  };
+  const handleChat = () => {
+    const username = localStorage.getItem("username");
+    navigate(`/chatroom?username=${username}`); 
   };
 
   return (
@@ -27,6 +31,9 @@ const Home = () => {
           Join our community today and discover how we can help you achieve your goals in the most
           efficient and seamless way possible.
         </p>
+        <button className="login-button" style={{margin: 15}}  onClick={handleChat}>
+          Help!
+        </button>
         <button className="login-button" onClick={handleLoginRedirect} data-testid='logout-btn'>
           Logout
         </button>
