@@ -41,7 +41,13 @@ const Signup: React.FC = () => {
         userRole
       });
       if(userRole === '2'){
-      const  roomname = `1111111111_${mobileNumber}`
+        const id = 1;
+        const response = await axios.get(
+          `http://localhost:3000/api/adminNumber/${id}`
+        );
+        localStorage.setItem("adminMobileNumber", response.data.mobileNumber)
+        const adminMobile = localStorage.getItem("adminMobileNumber")
+      const  roomname = `${adminMobile}_${mobileNumber}`
 
       if (res.data.signup) {
         socket = io(socketUrl);
@@ -49,7 +55,7 @@ const Signup: React.FC = () => {
           "join",
           {
             roomname,
-            senderMobileNumber: '1111111111',
+            senderMobileNumber: adminMobile,
             receiverMobileNumber: mobileNumber,
           },
           (err: string) => {
@@ -59,9 +65,9 @@ const Signup: React.FC = () => {
           }
         );
       }
-        navigate('/login'); 
-        alert(res.data.message);
-      }      
+    }      
+    navigate('/login'); 
+    alert(res.data.message);
     } catch (error: any) {
       if (error.response && error.response.data && error.response.data.message) {
         setError(error.response.data.message);
