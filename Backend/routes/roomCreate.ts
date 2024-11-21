@@ -103,7 +103,6 @@ export const handleRoomEvents = (socket: Socket, io: Server) => {
       const { roomname, userName } = user;
 
       socket.broadcast.to(roomname).emit('message', { 
-       
         text: `Offline` 
       });
 
